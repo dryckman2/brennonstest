@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
+import React, {useCallback} from 'react'
+import {useDropzone} from 'react-dropzone'
 import HeldFile from './heldfile.jsx';
 
 const FILES = [];
@@ -38,6 +38,7 @@ export default MyDropzone;
 
 export function filterFiles(searchString) {
     if (!searchString || searchString.length === 0) return FILES;
-    let filtered = FILES.filter((n) => { return n.file_contents.toLowerCase().includes(searchString.toLowerCase()) });
-    return filtered;
+    return FILES.filter((n) => {
+        return n.file_contents.toLowerCase().includes(searchString.toLowerCase())
+    });
 }

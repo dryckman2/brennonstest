@@ -21,7 +21,7 @@ class HeldFile {
     }
 
     updatePreview(searchString) {
-        if (!searchString || searchString.length === 0) { return this.firstPreview(this.file_contents) };
+        if (!searchString || searchString.length === 0) { return this.firstPreview(this.file_contents) }
         console.log(searchString);
         if (searchString && this.file_contents.toLowerCase().includes(searchString.toLowerCase())) {
             let io = this.file_contents.toLowerCase().indexOf(searchString.toLowerCase());
