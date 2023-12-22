@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import HeldFile from './heldfile.jsx';
 
-export const FILES = [];
+const FILES = [];
 
 function MyDropzone(props) {
     const onDrop = useCallback(acceptedFiles => {
@@ -12,7 +13,7 @@ function MyDropzone(props) {
             reader.onerror = () => console.log('file reading has failed')
             reader.onload = () => {
                 // Do whatever you want with the file contents
-                FILES.push(reader.result)
+                FILES.push(new HeldFile(FILES.length + 1, file.name, reader.result))
                 props.updater()
             }
             reader.readAsText(file)
@@ -32,8 +33,11 @@ function MyDropzone(props) {
             }
         </div>
     );
-
-
 }
-
 export default MyDropzone;
+
+export function filterFiles(searchString) {
+    if (!searchString || searchString.length === 0) return FILES;
+    let filtered = FILES.filter((n) => { return n.file_contents.toLowerCase().includes(searchString.toLowerCase()) });
+    return filtered;
+}

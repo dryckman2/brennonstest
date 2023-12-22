@@ -2,9 +2,10 @@ import React from 'react'
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-import SSFile from "./ssfile.jsx";
-import MyDropzone, { FILES } from './dropzone.jsx';
+import MyDropzone, { filterFiles } from './dropzone.jsx';
 
+
+let searchString = "";
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -16,11 +17,12 @@ class SearchBar extends React.Component {
   }
 
   handleChange(event) {
+    searchString = event.target.value;
     this.setState({ value: event.target.value });
+    root.render(<Page />)
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
   }
 
@@ -34,16 +36,13 @@ class SearchBar extends React.Component {
   }
 }
 
-function FilesList() {
-  const rows = [];
-  if (FILES.length) {
-    for (let i = 0; i < FILES.length; i++) {
-      rows.push(<SSFile key={i} filename={FILES[i]} filecontent="" />);
-    }
+function FilesList(props) {
+  let filtered = filterFiles(props.filter);
+  if (filtered.length === 0) {
+    return [<tr key={0}><td><div>No Active Files</div></td></tr>];
   } else {
-    rows.push(<tr key={0}><td><div>No Active Files</div></td></tr>);
+    return filtered.map((n) => { return n.toReact(props.filter) });
   }
-  return rows;
 }
 
 
@@ -57,20 +56,20 @@ class Page extends React.Component {
   render() {
     return (
       <div className="page">
-        <div className='fillerTop'></div>
+        <div className='fillerTop' />
         <table className="spanningTable">
           <tbody>
             <tr>
-              <td>
+              <td colSpan={"100%"}>
                 <MyDropzone updater={this.state.updater} />
               </td>
             </tr>
             <tr>
-              <td>
+              <td colSpan={"100%"}>
                 <SearchBar />
               </td>
             </tr>
-            <FilesList />
+            <FilesList filter={searchString} />
           </tbody>
         </table>
       </div >

@@ -1,14 +1,12 @@
 import React from 'react'
 
 
-class SSFile extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = { filename: props.filename, filecontents: props.filecontents };
-    }
-    render() {
-        return (<tr><td><div>{this.state.filename}</div></td></tr>);
-    }
+function SSFile(props) {
+    return (<tr>
+        <td width={"10%"}>{props.filename}</td>
+        <td>{props.preview}</td>
+    </tr>);
+
 }
 
 export default SSFile;
