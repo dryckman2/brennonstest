@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-import MyDropzone, { filterFiles } from './dropzone.jsx';
+import MyDropzone, { filterFiles } from './view/dropzone.jsx';
 
 
 let searchString = "";
@@ -10,7 +10,7 @@ let searchString = "";
 class SearchBar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: '', updater: this.props.updater };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,10 +19,11 @@ class SearchBar extends React.Component {
   handleChange(event) {
     searchString = event.target.value;
     this.setState({ value: event.target.value });
-    root.render(<Page />)
+    this.state.updater();
   }
 
   handleSubmit(event) {
+    this.state.updater();
     event.preventDefault();
   }
 
@@ -56,7 +57,11 @@ class Page extends React.Component {
   render() {
     return (
       <div className="page">
-        <div className='fillerTop' />
+        <div className='fillerTop'>
+          <div className="signIn">
+            Sign In
+          </div>
+        </div>
         <table className="spanningTable">
           <tbody>
             <tr>
@@ -66,7 +71,7 @@ class Page extends React.Component {
             </tr>
             <tr>
               <td colSpan={"100%"}>
-                <SearchBar />
+                <SearchBar updater={this.state.updater} />
               </td>
             </tr>
             <FilesList filter={searchString} />

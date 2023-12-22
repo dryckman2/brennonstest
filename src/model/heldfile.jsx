@@ -1,4 +1,4 @@
-import SSFile from "./ssfile.jsx";
+import SSFile from "../view/ssfile.jsx";
 import React from 'react'
 
 class HeldFile {
@@ -21,13 +21,14 @@ class HeldFile {
     }
 
     updatePreview(searchString) {
-        if (!searchString || searchString.length === 0) { return this.firstPreview(this.file_contents) }
-        console.log(searchString);
-        if (searchString && this.file_contents.toLowerCase().includes(searchString.toLowerCase())) {
+        if (!searchString || searchString.length === 0) {
+            this.preview = this.firstPreview(this.file_contents)
+        } else if (searchString && this.file_contents.toLowerCase().includes(searchString.toLowerCase())) {
             let io = this.file_contents.toLowerCase().indexOf(searchString.toLowerCase());
             this.preview = this.file_contents.substring(io > 10 ? io - 10 : 0, Math.min(io + 50, this.file_contents.length));
+        } else {
+            this.preview = "Error";
         }
-        return "Error";
     }
 
     toReact(filter) {
