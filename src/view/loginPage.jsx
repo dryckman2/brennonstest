@@ -10,6 +10,7 @@ export default class LoginPage extends React.Component {
             email: "",
             password: "",
             error: "none",
+            errorMessage: "",
         }
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -19,14 +20,19 @@ export default class LoginPage extends React.Component {
 
 
     handleSubmit(event) {
-        this.setState({ error: "Error" })
-        console.log(this.state.error)
+        if (this.state.email === "") { // TODO: Replace with email validation
+            this.setState({ error: "Error", errorMessage: "Invalid Email Submitted" })
+        } else if (this.state.password === "") { // TODO: Replace with password validation
+            this.setState({ error: "Error", errorMessage: "Invalid Password Submitted" })
+        } else {
+            this.setState({ error: "Warning", errorMessage: "Login Not Implemented" })
+            console.log(this.state.email + ":  " + this.state.password)
+        }
         event.preventDefault();
     }
 
     handleEmailChange(event) {
         this.setState({ email: event.target.value });
-        console.log(this.state.error)
     }
 
     handlePasswordChange(event) {
@@ -40,6 +46,9 @@ export default class LoginPage extends React.Component {
                 <tbody>
                     <tr>
                         <td width={"100%"} colSpan={"100%"} className='spacer'></td>
+                    </tr>
+                    <tr>
+                        <td colSpan={"100%"} align='center' className='shadowless'><Error level={this.state.error} message={this.state.errorMessage} /></td>
                     </tr>
                     <tr>
                         <td className='shadowless'>
@@ -57,7 +66,7 @@ export default class LoginPage extends React.Component {
                         </td>
                         <td className='shadowless'>
                             <form onSubmit={this.handleSubmit} id="Password" >
-                                <input value={this.state.password} onChange={this.handlePasswordChange} type="text" />
+                                <input value={this.state.password} onChange={this.handlePasswordChange} type="password" />
                             </form>
                         </td>
                     </tr>
@@ -68,9 +77,7 @@ export default class LoginPage extends React.Component {
                             </form>
                         </td>
                     </tr>
-                    <tr>
-                        <td colSpan={"100%"} align='center' className='shadowless'><Error level={this.state.error} message={"Test Message"} /></td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>);
