@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
-import HeldFile from '../model/heldfile.jsx';
+import HeldFile from '../../model/heldfile.jsx';
 
 const FILES = [];
 
